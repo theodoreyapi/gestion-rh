@@ -1,41 +1,41 @@
 <?php
 
+use App\Http\Controllers\AttendaceAdminController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\EmployeesController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\HolidaysController;
+use App\Http\Controllers\IncenditController;
+use App\Http\Controllers\LeavesAdminController;
+use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\PolicyController;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\ResignationController;
+use App\Http\Controllers\TerminationController;
 use App\Http\Controllers\TrainersController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TrainingTypeController;
+use App\Http\Controllers\UsersController;
+use App\Models\Attendance;
+use App\Models\Holidays;
+use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('index', [CustomAuthController::class, 'dashboard']);
 Route::post('custom-login', [CustomAuthController::class, 'customLogin']);
-Route::get('logout', [CustomAuthController::class, 'signOut']);
+Route::get('logout', [CustomAuthController::class, 'signOut'])->name('logout');
 
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->intended('index');
     }
     return view('auth.login');
-});
-
-
-Route::get('register', function () {
-    return view('auth.register');
-});
-Route::get('forgot', function () {
-    return view('auth.forgot-password');
-});
-Route::get('email-verif', function () {
-    return view('auth.email-verification');
-});
-Route::get('reset-password', function () {
-    return view('auth.reset-password');
-});
-Route::get('change-success', function () {
-    return view('auth.success');
 });
 
 //error
@@ -45,7 +45,101 @@ Route::fallback(function () {
 
 // Dashboard
 Route::get('employee-dashboard', function () {
-    return view('dashboard.entreprises.employee-dashboard');
+    $membres = User::join('departments', 'users.department_id', '=', 'departments.depart')
+        ->where('users.department_id', Auth::user()->department_id)
+        ->select('users.name', 'users.last_name', 'users.photo', 'departments.deparment_name as department_name')
+        ->get();
+
+    $today = Carbon::today()->format('d-m');
+
+    // 🎂 Anniversaires aujourd'hui
+    $todayBirthdays = User::join('designations', 'users.designation_id', '=', 'designations.design')
+        ->select('users.name', 'users.last_name', 'designations.name_designation')
+        ->whereRaw("DATE_FORMAT(STR_TO_DATE(date_naissance, '%d-%m-%Y'), '%d-%m') = ?", [$today])
+        ->inRandomOrder()
+        ->first();
+
+        $nextHoliday = Holidays::whereDate('date', '>=', Carbon::today())
+        ->orderBy('date', 'asc')
+        ->first();
+
+        $user = Auth::user();
+
+        $today = now()->toDateString();
+        $weekStart = now()->startOfWeek();
+        $weekEnd = now()->endOfWeek();
+        $monthStart = now()->startOfMonth();
+        $monthEnd = now()->endOfMonth();
+
+        $stats = [
+            // Heures aujourd'hui
+            'today' => Attendance::where('user_id', $user->id)
+                ->whereDate('date', $today)
+                ->sum('worked_hours'),
+
+            // Heures cette semaine
+            'week' => Attendance::where('user_id', $user->id)
+                ->whereBetween('date', [$weekStart, $weekEnd])
+                ->sum('worked_hours'),
+
+            // Heures ce mois
+            'month' => Attendance::where('user_id', $user->id)
+                ->whereBetween('date', [$monthStart, $monthEnd])
+                ->sum('worked_hours'),
+
+            // Heures supplémentaires
+            'overtime' => Attendance::where('user_id', $user->id)
+                ->whereBetween('date', [$monthStart, $monthEnd])
+                ->sum('overtime_hours'),
+
+            // Heures productives aujourd’hui
+            'productive_today' => Attendance::where('user_id', $user->id)
+                ->whereDate('date', $today)
+                ->sum('productive_hours'),
+
+            // Pauses aujourd’hui
+            'break_today' => Attendance::where('user_id', $user->id)
+                ->whereDate('date', $today)
+                ->sum('break_minutes') / 60, // en heures
+        ];
+
+        // Exemple de structure vide : 06h à 23h
+        $timeline = [];
+        for ($hour = 6; $hour <= 23; $hour++) {
+            $timeline[$hour] = [
+                'productive' => 0,
+                'break' => 0,
+                'overtime' => 0,
+            ];
+        }
+
+        // Récupérer les données du jour
+        $attendances = Attendance::where('user_id', $user->id)
+            ->whereDate('date', $today)
+            ->get();
+
+        foreach ($attendances as $att) {
+            $start = Carbon::parse($att->punch_in_time);
+            $end = Carbon::parse($att->punch_out_time ?? now());
+
+            for ($hour = $start->hour; $hour <= $end->hour; $hour++) {
+                if (isset($timeline[$hour])) {
+                    $timeline[$hour]['productive'] += $att->productive_hours / ($end->hour - $start->hour + 1);
+                    $timeline[$hour]['break'] += $att->break_minutes / 60 / ($end->hour - $start->hour + 1);
+                    $timeline[$hour]['overtime'] += $att->overtime_hours / ($end->hour - $start->hour + 1);
+                }
+            }
+        }
+
+        $states = [
+            'working' => $attendances->sum('worked_hours'),
+            'productive' => $attendances->sum('productive_hours'),
+            'break' => $attendances->sum('break_minutes') / 60,
+            'overtime' => $attendances->sum('overtime_hours'),
+            'timeline' => $timeline,
+        ];
+
+    return view('dashboard.employee-dashboard', compact('membres', 'todayBirthdays', 'nextHoliday', 'stats', 'states'));
 });
 
 //Profile
@@ -101,57 +195,64 @@ Route::get('leave-type', function () {
     return view('profile.leave-type');
 });
 
-// Applications
-Route::get('calendar', function () {
-    return view('applications.calendar');
-});
-
 //CRM
 Route::get('activity', function () {
-    return view('crm.activity');
+    return view('admin.help.activity');
 });
 
 
 //Assets
 Route::get('assetes', function () {
-    return view('assets.assets');
+    return view('admin.assets.assets');
 });
 Route::get('asset-categories', function () {
-    return view('assets.asset-categories');
+    return view('admin.assets.asset-categories');
 });
 
 //Users Management
-Route::get('users', function () {
-    return view('roles.users');
-});
+Route::resource('users', UsersController::class);
 Route::get('roles-permissions', function () {
-    return view('roles.roles-permissions');
+    return view('admin.user.roles-permissions');
 });
 
 //Repports
 Route::get('attendance-report', function () {
-    return view('reports.attendance-report');
+    return view('admin.reports.attendance-report');
 });
 Route::get('daily-report', function () {
-    return view('reports.daily-report');
+    return view('admin.reports.daily-report');
 });
 Route::get('leave-report', function () {
-    return view('reports.leave-report');
+    return view('admin.reports.leave-report');
 });
 Route::get('employee-report', function () {
-    return view('reports.employee-report');
+    return view('admin.reports.employee-report');
 });
 
 // HRM
+Route::resource('evaluations', EvaluationController::class);
 Route::resource('employees', EmployeesController::class);
+Route::post('add-bank/{id}', [EmployeesController::class, 'bank']);
+
+Route::post('add-famille/{id}', [EmployeesController::class, 'famille']);
+
+Route::post('add-education/{id}', [EmployeesController::class, 'education']);
+Route::post('edit-education/{id}', [EmployeesController::class, 'updateEducation']);
+Route::delete('/delete-education/{id}', [EmployeesController::class, 'deleteEducation']);
+
+Route::post('add-experience/{id}', [EmployeesController::class, 'experience']);
+Route::post('edit-experience/{id}', [EmployeesController::class, 'updateExperience']);
+Route::delete('/delete-experience/{id}', [EmployeesController::class, 'deleteExperience']);
+
+Route::post('add-urgence/{id}', [EmployeesController::class, 'urgence']);
+
+Route::get('get-designations/{departement_id}', [EmployeesController::class, 'getDesignations']);
 Route::get('employee-details', function () {
     return view('hrm.employees.employee-details');
 });
 Route::resource('departments', DepartmentController::class);
 Route::resource('designations', DesignationController::class);
-Route::get('policy', function () {
-    return view('hrm.employees.policy');
-});
+Route::resource('policy', PolicyController::class);
 Route::get('tickets', function () {
     return view('hrm.tickets.tickets');
 });
@@ -159,29 +260,22 @@ Route::get('ticket-details', function () {
     return view('hrm.tickets.ticket-details');
 });
 Route::resource('holidays', HolidaysController::class);
-Route::get('leaves', function () {
-    return view('hrm.attendances.leaves');
-});
-Route::get('leaves-employee', function () {
-    return view('hrm.attendances.leaves-employee');
-});
 Route::get('leave-settings', function () {
-    return view('hrm.attendances.leave-settings');
+    return view('hrm.attendance.leaves.leave-settings');
 });
-Route::get('attendance-admin', function () {
-    return view('hrm.attendances.attendance-admin');
-});
-Route::get('attendance-employee', function () {
-    return view('hrm.attendances.attendance-employee');
-});
+Route::resource('leaves', LeavesAdminController::class);
+Route::resource('leaves-employee', LeavesController::class);
+Route::resource('attendance-admin', AttendaceAdminController::class);
+Route::resource('attendance-employee', AttendanceController::class);
+Route::resource('attendance-incendit', IncenditController::class);
 Route::get('timesheets', function () {
-    return view('hrm.attendances.timesheets');
+    return view('hrm.attendance.timesheets');
 });
 Route::get('schedule-timing', function () {
-    return view('hrm.attendances.schedule-timing');
+    return view('hrm.attendance.schedule-timing');
 });
 Route::get('overtime', function () {
-    return view('hrm.attendances.overtime');
+    return view('hrm.attendance.overtime');
 });
 Route::get('performance-indicator', function () {
     return view('hrm.performance.performance-indicator');
@@ -198,17 +292,13 @@ Route::get('goal-tracking', function () {
 Route::get('goal-type', function () {
     return view('hrm.performance.goal-type');
 });
-Route::get('training', function () {
-    return view('hrm.trainings.training');
-});
+Route::get('/attendance/timeline', [AttendanceController::class, 'loadTimeline'])->name('attendance.timeline');
+//Route::middleware(['auth'])->group(function () {
+Route::post('/attendance/punch', [AttendanceController::class, 'storePunch'])->name('attendance.punch');
+//});
+Route::resource('training', TrainingController::class);
 Route::resource('trainers', TrainersController::class);
 Route::resource('training-type', TrainingTypeController::class);
-Route::get('promotion', function () {
-    return view('hrm.promotions.promotion');
-});
-Route::get('resignation', function () {
-    return view('hrm.resignations.resignation');
-});
-Route::get('termination', function () {
-    return view('hrm.terminations.termination');
-});
+Route::resource('promotion', PromotionController::class);
+Route::resource('resignation', ResignationController::class);
+Route::resource('termination', TerminationController::class);

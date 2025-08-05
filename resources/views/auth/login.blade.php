@@ -57,8 +57,10 @@
                                     @csrf
                                     <div class="vh-100 d-flex flex-column justify-content-between p-4 pb-0">
                                         <div class=" mx-auto mb-5 text-center">
-                                            <img src="{{ URL::asset('') }}assets/img/logo.svg" class="img-fluid"
-                                                alt="Logo">
+                                            {{-- <img src="{{ URL::asset('') }}assets/img/logo.svg" class="img-fluid"
+                                                alt="Logo"> --}}
+                                                <h3>GRH</h3>
+                                                <em>Gestion des Ressources Humaines</em>
                                         </div>
                                         <div class="">
                                             <div class="text-center mb-3">
@@ -87,14 +89,14 @@
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                                <div class="d-flex align-items-center">
+                                                {{-- <div class="d-flex align-items-center">
                                                     <div class="form-check form-check-md mb-0">
                                                         <input name="souvenir" checked class="form-check-input"
                                                             id="remember_me" type="checkbox">
                                                         <label for="remember_me"
                                                             class="form-check-label mt-0">Souviens-toi de moi</label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 {{-- <div class="text-end">
                                                     <a href="{{ url('forgot') }}" class="link-danger">
                                                         Mot de passe oublié?

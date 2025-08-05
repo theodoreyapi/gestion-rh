@@ -556,7 +556,7 @@ $(document).ready(function () {
         bar: {
           horizontal: false,
           borderRadius: 4,
-          borderRadiusApplication: "end", // "around" / "end" 
+          borderRadiusApplication: "end", // "around" / "end"
           borderRadiusWhenStacked: "all", // "all"/"last"
           columnWidth: '20%',
         },
@@ -2122,7 +2122,7 @@ if ($('#leave-report').length > 0) {
     }, {
       name: 'Others',
       data: [25, 20, 30, 35,50,60,25, 20, 30, 35,50,60] // Replace with your data
-    }, 
+    },
   ],
     chart: {
       type: 'bar',
@@ -2224,7 +2224,7 @@ if ($('#revenue-chart').length > 0) {
           bar: {
               horizontal: false,
               columnWidth: '50%',
-              endingShape: 'rounded'  
+              endingShape: 'rounded'
           },
       },
       dataLabels: {
@@ -2250,76 +2250,15 @@ if ($('#revenue-chart').length > 0) {
           }
       }
   }
-  
+
   var chart = new ApexCharts(
       document.querySelector("#revenue-chart"),
       sCol
   );
-  
-  chart.render();
-}
-
-// Employee Department
-
-if ($('#emp-department').length > 0) {
-  var sBar = {
-    chart: {
-      height: 220,
-      type: 'bar',
-      padding: {
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0
-      },
-      toolbar: {
-        show: false,
-      }
-    },
-    colors: ['#FF6F28'],
-    grid: {
-      borderColor: '#E5E7EB',
-      strokeDashArray: 5,
-      padding: {
-        top: -20,
-        left: 0,   
-        right: 0,
-        bottom: 0
-      }
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 5,
-        horizontal: true,
-        barHeight: '35%',
-        endingShape: 'rounded'
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    series: [{
-      data: [80, 110, 80, 20, 60, 100],
-      name: 'Employee'
-    }],
-    xaxis: {
-      categories: ['UI/UX', 'Development', 'Management', 'HR', 'Testing', 'Marketing'],
-      labels: {
-        style: {
-          colors: '#111827', 
-          fontSize: '13px',
-        }
-      }
-    }
-  }
-
-  var chart = new ApexCharts(
-    document.querySelector("#emp-department"),
-    sBar
-  );
 
   chart.render();
 }
+
 
 // Company Chart
 
@@ -2345,7 +2284,7 @@ if ($('#company-chart').length > 0) {
     }],
     plotOptions: {
       bar: {
-        borderRadius: 10, 
+        borderRadius: 10,
         borderRadiusWhenStacked: 'all',
         horizontal: false,
         endingShape: 'rounded',
@@ -2367,7 +2306,7 @@ if ($('#company-chart').length > 0) {
       categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
       labels: {
         style: {
-          colors: '#6B7280', 
+          colors: '#6B7280',
           fontSize: '13px',
         }
       }
@@ -2375,7 +2314,7 @@ if ($('#company-chart').length > 0) {
     yaxis: {
       labels: {
         offsetX: -15,
-        show: false 
+        show: false
       }
     },
     grid: {
@@ -2485,7 +2424,7 @@ if ($('#plan-overview').length > 0) {
       }],
       plotOptions: {
         bar: {
-          borderRadius: 5, 
+          borderRadius: 5,
           borderRadiusWhenStacked: 'all',
           horizontal: false,
           endingShape: 'rounded'
@@ -2502,7 +2441,7 @@ if ($('#plan-overview').length > 0) {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov', 'Dec'],
         labels: {
           style: {
-            colors: '#6B7280', 
+            colors: '#6B7280',
             fontSize: '13px',
           }
         }
@@ -2511,7 +2450,7 @@ if ($('#plan-overview').length > 0) {
         labels: {
           offsetX: -15,
           style: {
-            colors: '#6B7280', 
+            colors: '#6B7280',
             fontSize: '13px',
           }
         }
@@ -2621,7 +2560,7 @@ if ($('#plan-overview').length > 0) {
       }],
       plotOptions: {
         bar: {
-          borderRadius: 5, 
+          borderRadius: 5,
           horizontal: false,
           endingShape: 'rounded'
         },
@@ -2637,7 +2576,7 @@ if ($('#plan-overview').length > 0) {
         categories: ['Inpipeline', 'Follow Up', 'Schedule', 'Conversion'],
         labels: {
           style: {
-            colors: '#6B7280', 
+            colors: '#6B7280',
             fontSize: '13px',
           }
         }
@@ -2646,7 +2585,7 @@ if ($('#plan-overview').length > 0) {
         labels: {
           offsetX: -15,
           style: {
-            colors: '#6B7280', 
+            colors: '#6B7280',
             fontSize: '13px',
           }
         }
@@ -2679,7 +2618,7 @@ if ($('#plan-overview').length > 0) {
     name: 'Series 1',
     data: [80, 50, 30, 40, 100, 20],
     color: '#F37438',
-    
+
   }, {
     name: 'Series 2',
     data: [20, 30, 40, 80, 20, 80],
@@ -2706,7 +2645,7 @@ if ($('#plan-overview').length > 0) {
   },
   stroke: {
     width: 2,
-    curve: 'smooth' 
+    curve: 'smooth'
   },
   fill: {
     opacity: 1
@@ -2762,7 +2701,7 @@ if ($('#plan-overview').length > 0) {
   dataLabels: {
     enabled: true,
     formatter: function (val, opt) {
-      return opt.w.globals.labels[opt.dataPointIndex] 
+      return opt.w.globals.labels[opt.dataPointIndex]
     },
     dropShadow: {
       enabled: true,
@@ -2808,7 +2747,7 @@ if ($('#plan-overview').length > 0) {
       }],
       plotOptions: {
         bar: {
-          borderRadius: 5, 
+          borderRadius: 5,
           borderRadiusWhenStacked: 'all',
           horizontal: false,
           endingShape: 'rounded'
@@ -2825,7 +2764,7 @@ if ($('#plan-overview').length > 0) {
         categories: ['Competitor', 'Budget', 'Unresponsie', 'Timing'],
         labels: {
           style: {
-            colors: '#6B7280', 
+            colors: '#6B7280',
             fontSize: '9px',
           }
         }
@@ -2834,7 +2773,7 @@ if ($('#plan-overview').length > 0) {
         labels: {
           offsetX: -15,
           style: {
-            colors: '#6B7280', 
+            colors: '#6B7280',
             fontSize: '10px',
           }
         }
@@ -2872,7 +2811,7 @@ if ($('#plan-overview').length > 0) {
     labels: ['Paid', 'Google', 'Referals', 'Campaigns'], // Labels for the data
     colors: ['#FFC107', '#0C4B5E', '#AB47BC', '#FD3995'], // Colors from the image
     plotOptions: {
-        pie: { 
+        pie: {
             donut: {
                 size: '60%',
                 labels: {
@@ -2889,7 +2828,7 @@ if ($('#plan-overview').length > 0) {
         }
     },
     stroke: {
-   
+
   lineCap: 'round',
   show: true,
   width: 0,    // Space between donut sections
@@ -2976,7 +2915,7 @@ chart.render();
     }],
     plotOptions: {
       bar: {
-        borderRadius: 5, 
+        borderRadius: 5,
         borderRadiusWhenStacked: 'all',
         horizontal: false,
         endingShape: 'rounded'
@@ -2993,7 +2932,7 @@ chart.render();
       categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov', 'Dec'],
       labels: {
         style: {
-          colors: '#6B7280', 
+          colors: '#6B7280',
           fontSize: '13px',
         }
       }
@@ -3004,7 +2943,7 @@ chart.render();
       labels: {
         offsetX: -15,
         style: {
-          colors: '#6B7280', 
+          colors: '#6B7280',
           fontSize: '13px',
         },
         formatter: function (value) {
@@ -3023,7 +2962,7 @@ chart.render();
       show: false
     },
     dataLabels: {
-      enabled: false 
+      enabled: false
     },
     tooltip: {
       y: {
@@ -3070,11 +3009,11 @@ chart.render();
         {
           x: 'Tue',
           y: 29
-        }, 
+        },
         {
           x: 'Wed',
           y: 13
-        }, 
+        },
         {
           x: 'Thu',
           y: 32
@@ -3103,11 +3042,11 @@ chart.render();
         {
           x: 'Tue',
           y: 29
-        }, 
+        },
         {
           x: 'Wed',
           y: 13
-        }, 
+        },
         {
           x: 'Thu',
           y: 32
@@ -3135,11 +3074,11 @@ chart.render();
         {
           x: 'Tue',
           y: 29
-        }, 
+        },
         {
           x: 'Wed',
           y: 13
-        }, 
+        },
         {
           x: 'Thu',
           y: 32
@@ -3167,11 +3106,11 @@ chart.render();
         {
           x: 'Tue',
           y: 29
-        }, 
+        },
         {
           x: 'Wed',
           y: 13
-        }, 
+        },
         {
           x: 'Thu',
           y: 32
@@ -3199,11 +3138,11 @@ chart.render();
         {
           x: 'Tue',
           y: 20
-        }, 
+        },
         {
           x: 'Wed',
           y: 13
-        }, 
+        },
         {
           x: 'Thu',
           y: 32
@@ -3231,11 +3170,11 @@ chart.render();
         {
           x: 'Tue',
           y: 0
-        }, 
+        },
         {
           x: 'Wed',
           y: 75
-        }, 
+        },
         {
           x: 'Thu',
           y: 0
