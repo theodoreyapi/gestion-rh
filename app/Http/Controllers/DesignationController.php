@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departments;
 use App\Models\Designations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DesignationController extends Controller
 {
@@ -14,8 +15,24 @@ class DesignationController extends Controller
     public function index()
     {
         $departments = Departments::all();
-        $all = Designations::join('departments', 'designations.department_id', '=', 'departments.depart')
-            ->select('designations.*', 'departments.deparment_name')
+
+        $all = DB::table('designations')
+            ->leftJoin('departments', 'designations.department_id', '=', 'departments.depart')
+            ->leftJoin('users', 'designations.design', '=', 'users.designation_id')
+            ->select(
+                'designations.*',
+                'departments.deparment_name',
+                DB::raw('COUNT(users.id) as users_count')
+            )
+            ->groupBy(
+                'designations.design',
+                'designations.name_designation',
+                'designations.department_id',
+                'designations.status_design',
+                'designations.created_at',
+                'designations.updated_at',
+                'departments.deparment_name'
+            )
             ->get();
 
         return view('hrm.employees.designations', compact('departments', 'all'));

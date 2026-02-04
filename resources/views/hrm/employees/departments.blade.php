@@ -152,7 +152,7 @@
                                         <h6 class="fw-medium"><a href="#">{{ $item->deparment_name }}</a></h6>
                                     </td>
                                     <td>
-                                        15
+                                        {{ $item->users_count }}
                                     </td>
                                     <td>
                                         @if ($item->status_depart == 'Active')

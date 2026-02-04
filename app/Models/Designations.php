@@ -19,4 +19,14 @@ class Designations extends Model
     protected $table = 'designations';
 
     protected $primaryKey = 'design';
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'designation_id', 'design');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Departments::class, 'department_id', 'depart');
+    }
 }

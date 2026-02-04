@@ -168,7 +168,7 @@
                                     </td>
                                     <td>{{ $item->deparment_name }}</td>
                                     <td>
-                                        10
+                                        {{ $item->users_count }}
                                     </td>
                                     <td>
                                         @if ($item->status_design == 'Active')

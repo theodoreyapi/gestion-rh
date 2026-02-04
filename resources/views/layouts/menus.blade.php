@@ -152,27 +152,32 @@
                           </li> --}}
                       </ul>
                   </li>
-                  {{-- <li class="menu-title"><span>PROJECTS</span></li>
-                <li>
-                    <ul>
-                        <li>
-                            <a href="clients-grid">
-                                <i class="ti ti-users-group"></i><span>Clients</span>
-                            </a>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-box"></i><span>Projects</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="projects-grid">Projects</a></li>
-                                <li><a href="tasks">Tasks</a></li>
-                                <li><a href="task-board">Task Board</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li> --}}
+                  <li class="menu-title"><span>PROJETS</span></li>
+                  <li>
+                      <ul>
+                          <li>
+                              <a href="clients-grid">
+                                  <i class="ti ti-users-group"></i><span>Clients</span>
+                              </a>
+                          </li>
+                          <li class="submenu">
+                              <a href="javascript:void(0);"
+                                  class="{{ Request::is('projects') ? 'active subdrop' : '' }}
+                                 {{ Request::is('employee-dashboard') ? 'active subdrop' : '' }}
+                                  {{ Request::is('deals-dashboard') ? 'active subdrop' : '' }}
+                                   {{ Request::is('leads-dashboard') ? 'active subdrop' : '' }}">
+                                  <i class="ti ti-box"></i><span>Projets</span>
+                                  <span class="menu-arrow"></span>
+                              </a>
+                              <ul>
+                                  <li><a href="projects"
+                                          class="{{ Request::is('projects') ? 'active' : '' }}">Projets</a></li>
+                                  {{-- <li><a href="tasks" class="{{ Request::is('index') ? 'active' : '' }}">Tasks</a></li>
+                                  <li><a href="task-board" class="{{ Request::is('index') ? 'active' : '' }}">Task Board</a></li> --}}
+                              </ul>
+                          </li>
+                      </ul>
+                  </li>
                   {{-- <li class="menu-title"><span>CRM</span></li>
                   <li>
                       <ul>
@@ -197,14 +202,14 @@
                                   <span class="menu-arrow"></span>
                               </a>
                               <ul>
-                                 <li><a class="{{ Request::is('employees') ? 'active' : '' }}"
-                                         href="{{ url('employees') }}">Employés</a></li>
-                                 <li><a class="{{ Request::is('evaluations') ? 'active' : '' }}"
-                                         href="{{ url('evaluations') }}">Evaluations</a></li>
-                                 <li><a class="{{ Request::is('departments') ? 'active' : '' }}"
-                                         href="{{ url('departments') }}">Départements</a></li>
-                                 <li><a class="{{ Request::is('designations') ? 'active' : '' }}"
-                                         href="{{ url('designations') }}">Désignations</a></li>
+                                  <li><a class="{{ Request::is('employees') ? 'active' : '' }}"
+                                          href="{{ url('employees') }}">Employés</a></li>
+                                  <li><a class="{{ Request::is('evaluations') ? 'active' : '' }}"
+                                          href="{{ url('evaluations') }}">Evaluations</a></li>
+                                  <li><a class="{{ Request::is('departments') ? 'active' : '' }}"
+                                          href="{{ url('departments') }}">Départements</a></li>
+                                  <li><a class="{{ Request::is('designations') ? 'active' : '' }}"
+                                          href="{{ url('designations') }}">Désignations</a></li>
                                   {{-- <li><a class="{{ Request::is('policy') ? 'active' : '' }}"
                                           href="policy">Politiques</a></li> --}}
                               </ul>
@@ -226,43 +231,43 @@
                               </a>
                           </li>
                           <li class="submenu">
-                             <a href="javascript:void(0);"
-                                 class="{{ Request::is('attendance-incendit') ? 'active subdrop' : '' }}
+                              <a href="javascript:void(0);"
+                                  class="{{ Request::is('attendance-incendit') ? 'active subdrop' : '' }}
                                    {{ Request::is('leaves') ? 'active subdrop' : '' }}
                                    {{ Request::is('leaves-employee') ? 'active subdrop' : '' }}
                                    {{ Request::is('attendance-admin') ? 'active subdrop' : '' }}
                                    {{ Request::is('attendance-employee') ? 'active subdrop' : '' }}
                                    {{ Request::is('attendance-incendit') ? 'active subdrop' : '' }}
                                     ">
-                                 <i class="ti ti-file-time"></i><span>Présences</span>
-                                 <span class="menu-arrow"></span>
-                             </a>
-                             <ul>
-                                 <li class="submenu submenu-two">
-                                     <a href="javascript:void(0);"
-                                         class="{{ Request::is('leaves') ? 'active subdrop' : '' }}
+                                  <i class="ti ti-file-time"></i><span>Présences</span>
+                                  <span class="menu-arrow"></span>
+                              </a>
+                              <ul>
+                                  <li class="submenu submenu-two">
+                                      <a href="javascript:void(0);"
+                                          class="{{ Request::is('leaves') ? 'active subdrop' : '' }}
                                    {{ Request::is('leaves-employee') ? 'active subdrop' : '' }}
                                     ">Congés<span
-                                             class="menu-arrow inside-submenu"></span></a>
-                                     <ul>
-                                         <li><a class="{{ Request::is('leaves') ? 'active' : '' }}"
-                                                 href="{{ url('leaves') }}">Congés</a></li>
-                                         <li><a class="{{ Request::is('leaves-employee') ? 'active' : '' }}"
-                                                 href="{{ url('leaves-employee') }}">Mes Congés</a></li>
-                                         {{-- <li><a href="{{ url('leave-settings') }}">Leave Settings</a></li> --}}
-                                     </ul>
-                                 </li>
-                                 <li><a class="{{ Request::is('attendance-admin') ? 'active' : '' }}"
-                                         href="{{ url('attendance-admin') }}">Présences</a></li>
-                                 <li><a class="{{ Request::is('attendance-employee') ? 'active' : '' }}"
-                                         href="{{ url('attendance-employee') }}">Mes Présences</a></li>
-                                 <li><a class="{{ Request::is('attendance-incendit') ? 'active' : '' }}"
-                                         href="{{ url('attendance-incendit') }}">Incidents/Accidents</a></li>
-                                 {{-- <li><a href="{{ url('timesheets') }}">Timesheets</a></li>
+                                              class="menu-arrow inside-submenu"></span></a>
+                                      <ul>
+                                          <li><a class="{{ Request::is('leaves') ? 'active' : '' }}"
+                                                  href="{{ url('leaves') }}">Congés</a></li>
+                                          <li><a class="{{ Request::is('leaves-employee') ? 'active' : '' }}"
+                                                  href="{{ url('leaves-employee') }}">Mes Congés</a></li>
+                                          {{-- <li><a href="{{ url('leave-settings') }}">Leave Settings</a></li> --}}
+                                      </ul>
+                                  </li>
+                                  <li><a class="{{ Request::is('attendance-admin') ? 'active' : '' }}"
+                                          href="{{ url('attendance-admin') }}">Présences</a></li>
+                                  <li><a class="{{ Request::is('attendance-employee') ? 'active' : '' }}"
+                                          href="{{ url('attendance-employee') }}">Mes Présences</a></li>
+                                  <li><a class="{{ Request::is('attendance-incendit') ? 'active' : '' }}"
+                                          href="{{ url('attendance-incendit') }}">Incidents/Accidents</a></li>
+                                  {{-- <li><a href="{{ url('timesheets') }}">Timesheets</a></li>
                                  <li><a href="{{ url('schedule-timing') }}">Shift & Schedule</a></li>
                                  <li><a href="{{ url('overtime') }}">Overtime</a></li> --}}
-                             </ul>
-                         </li>
+                              </ul>
+                          </li>
                           {{-- <li class="submenu">
                               <a href="javascript:void(0);" class="">
                                   <i class="ti ti-school"></i><span>Performance</span>
@@ -277,86 +282,103 @@
                               </ul>
                           </li> --}}
                           <li class="submenu">
-                             <a href="javascript:void(0);"
-                                 class="{{ Request::is('training') ? 'active subdrop' : '' }}
+                              <a href="javascript:void(0);"
+                                  class="{{ Request::is('training') ? 'active subdrop' : '' }}
                                  {{ Request::is('trainers') ? 'active subdrop' : '' }}
                                   {{ Request::is('training-type') ? 'active subdrop' : '' }}">
-                                 <i class="ti ti-edit"></i><span>Formation</span>
-                                 <span class="menu-arrow"></span>
-                             </a>
-                             <ul>
-                                 <li><a href="{{ url('training') }}"
-                                         class="{{ Request::is('training') ? 'active' : '' }}">Formation</a></li>
-                                 <li><a href="{{ url('trainers') }}"
-                                         class="{{ Request::is('trainers') ? 'active' : '' }}">Formateurs</a></li>
-                                 <li><a href="{{ url('training-type') }}"
-                                         class="{{ Request::is('training-type') ? 'active' : '' }}">Type formation</a>
-                                 </li>
-                             </ul>
-                         </li>
-                         <li class="{{ Request::is('promotion') ? 'active' : '' }}">
-                             <a href="{{ url('promotion') }}">
-                                 <i class="ti ti-speakerphone"></i><span>Promotion</span>
-                             </a>
-                         </li>
-                         <li class="{{ Request::is('resignation') ? 'active' : '' }}">
-                             <a href="{{ url('resignation') }}">
-                                 <i class="ti ti-external-link"></i><span>Démission</span>
-                             </a>
-                         </li>
-                         <li class="{{ Request::is('termination') ? 'active' : '' }}">
-                             <a href="{{ url('termination') }}">
-                                 <i class="ti ti-circle-x"></i><span>Fin de contrat</span>
-                             </a>
-                         </li>
+                                  <i class="ti ti-edit"></i><span>Formation</span>
+                                  <span class="menu-arrow"></span>
+                              </a>
+                              <ul>
+                                  <li><a href="{{ url('training') }}"
+                                          class="{{ Request::is('training') ? 'active' : '' }}">Formation</a></li>
+                                  <li><a href="{{ url('trainers') }}"
+                                          class="{{ Request::is('trainers') ? 'active' : '' }}">Formateurs</a></li>
+                                  <li><a href="{{ url('training-type') }}"
+                                          class="{{ Request::is('training-type') ? 'active' : '' }}">Type
+                                          formation</a>
+                                  </li>
+                              </ul>
+                          </li>
+                          <li class="{{ Request::is('promotion') ? 'active' : '' }}">
+                              <a href="{{ url('promotion') }}">
+                                  <i class="ti ti-speakerphone"></i><span>Promotion</span>
+                              </a>
+                          </li>
+                          <li class="{{ Request::is('resignation') ? 'active' : '' }}">
+                              <a href="{{ url('resignation') }}">
+                                  <i class="ti ti-external-link"></i><span>Démission</span>
+                              </a>
+                          </li>
+                          <li class="{{ Request::is('termination') ? 'active' : '' }}">
+                              <a href="{{ url('termination') }}">
+                                  <i class="ti ti-circle-x"></i><span>Fin de contrat</span>
+                              </a>
+                          </li>
                       </ul>
                   </li>
-                  {{-- <li class="menu-title"><span>FINANCE & ACCOUNTS</span></li>
-                <li>
-                    <ul>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-shopping-cart-dollar"></i><span>Sales</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="estimates">Estimates</a></li>
-                                <li><a href="invoices">Invoices</a></li>
-                                <li><a href="payments">Payments</a></li>
-                                <li><a href="expenses">Expenses</a></li>
-                                <li><a href="provident-fund">Provident Fund</a></li>
-                                <li><a href="taxes">Taxes</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-file-dollar"></i><span>Accounting</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="categories">Categories</a></li>
-                                <li><a href="budgets">Budgets</a></li>
-                                <li><a href="budget-expenses">Budget Expenses</a></li>
-                                <li><a href="budget-revenues">Budget Revenues</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);">
-                                <i class="ti ti-cash"></i><span>Payroll</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul>
-                                <li><a href="employee-salary">Employee Salary</a></li>
-                                <li><a href="payslip">Payslip</a></li>
-                                <li><a href="payroll">Payroll Items</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li> --}}
+                  <li class="menu-title"><span>RECRUTEMENT</span></li>
+                  <li>
+                      <ul>
+                          <li>
+                              <a href="{{ url('job-grid') }}" class="{{ Request::is('job-grid') ? 'active' : '' }}">
+                                  <i class="ti ti-timeline"></i><span>Emplois</span>
+                              </a>
+                          </li>
+                          <li>
+                              <a href="{{ url('candidates-grid') }}"
+                                  class="{{ Request::is('candidates-grid') ? 'active' : '' }}">
+                                  <i class="ti ti-user-shield"></i><span>Postulés</span>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+                  <li class="menu-title"><span>FINANCE & ACCOUNTS</span></li>
+                  <li>
+                      <ul>
+                          <li class="submenu">
+                              <a href="javascript:void(0);">
+                                  <i class="ti ti-shopping-cart-dollar"></i><span>Sales</span>
+                                  <span class="menu-arrow"></span>
+                              </a>
+                              <ul>
+                                  <li><a href="estimates">Estimates</a></li>
+                                  <li><a href="invoices">Invoices</a></li>
+                                  <li><a href="payments">Payments</a></li>
+                                  <li><a href="expenses">Expenses</a></li>
+                                  <li><a href="provident-fund">Provident Fund</a></li>
+                                  <li><a href="taxes">Taxes</a></li>
+                              </ul>
+                          </li>
+                          <li class="submenu">
+                              <a href="javascript:void(0);">
+                                  <i class="ti ti-file-dollar"></i><span>Accounting</span>
+                                  <span class="menu-arrow"></span>
+                              </a>
+                              <ul>
+                                  <li><a href="categories">Categories</a></li>
+                                  <li><a href="budgets">Budgets</a></li>
+                                  <li><a href="budget-expenses">Budget Expenses</a></li>
+                                  <li><a href="budget-revenues">Budget Revenues</a></li>
+                              </ul>
+                          </li>
+                          <li class="submenu">
+                              <a href="javascript:void(0);">
+                                  <i class="ti ti-cash"></i><span>Payroll</span>
+                                  <span class="menu-arrow"></span>
+                              </a>
+                              <ul>
+                                  <li><a href="employee-salary">Employee Salary</a></li>
+                                  <li><a href="payslip">Payslip</a></li>
+                                  <li><a href="payroll">Payroll Items</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                  </li>
                   <li class="menu-title"><span>ADMINISTRATION</span></li>
                   <li>
                       <ul>
-                          {{-- <li class="submenu">
+                          <li class="submenu">
                               <a href="javascript:void(0);"
                                   class="{{ Request::is('assetes') ? 'active subdrop' : '' }}
                                  {{ Request::is('asset-categories') ? 'active subdrop' : '' }}">
@@ -374,40 +396,23 @@
                                           Categories</a>
                                   </li>
                               </ul>
-                          </li> --}}
-                          {{-- <li class="submenu">
-                             <a href="javascript:void(0);"
-                                 class="{{ Request::is('knowledgebase') ? 'active subdrop' : '' }}
-                                 {{ Request::is('activity') ? 'active subdrop' : '' }}
-                                  ">
-                                 <i class="ti ti-headset"></i><span>Help & Supports</span>
-                                 <span class="menu-arrow"></span>
-                             </a>
-                             <ul>
-                                 <li><a href="{{ url('knowledgebase') }}"
-                                         class="{{ Request::is('knowledgebase') ? 'active' : '' }}">Knowledge
-                                         Base</a></li>
-                                 <li><a href="{{ url('activity') }}"
-                                         class="{{ Request::is('activity') ? 'active' : '' }}">Activities</a>
-                                 </li>
-                             </ul>
-                         </li> --}}
+                          </li>
                           <li class="submenu">
-                             <a href="javascript:void(0);"
-                                 class="{{ Request::is('users') ? 'active subdrop' : '' }}
+                              <a href="javascript:void(0);"
+                                  class="{{ Request::is('users') ? 'active subdrop' : '' }}
                                  {{ Request::is('roles-permissions') ? 'active subdrop' : '' }}">
-                                 <i class="ti ti-user-star"></i><span>Gestion utilisateur</span>
-                                 <span class="menu-arrow"></span>
-                             </a>
-                             <ul>
-                                 <li><a href="{{ url('users') }}"
-                                         class="{{ Request::is('users') ? 'active' : '' }}">Utilisateurs</a></li>
-                                 {{-- <li><a href="{{ url('roles-permissions') }}"
+                                  <i class="ti ti-user-star"></i><span>Gestion utilisateur</span>
+                                  <span class="menu-arrow"></span>
+                              </a>
+                              <ul>
+                                  <li><a href="{{ url('users') }}"
+                                          class="{{ Request::is('users') ? 'active' : '' }}">Utilisateurs</a></li>
+                                  {{-- <li><a href="{{ url('roles-permissions') }}"
                                          class="{{ Request::is('roles-permissions') ? 'active' : '' }}">Rôles &
                                          Permissions</a></li> --}}
-                             </ul>
-                         </li>
-                          {{-- <li class="submenu">
+                              </ul>
+                          </li>
+                          <li class="submenu">
                               <a href="javascript:void(0);"
                                   class="{{ Request::is('attendance-report') ? 'active subdrop' : '' }}
                                  {{ Request::is('daily-report') ? 'active subdrop' : '' }}
@@ -432,7 +437,7 @@
                                           quotidien</a></li>
                               </ul>
                           </li>
-                          <li class="submenu">
+                          {{--   <li class="submenu">
                               <a href="javascript:void(0);"
                                   class="{{ Request::is('clear-cache') ? 'active subdrop' : '' }}
                                  {{ Request::is('profile-settings') ? 'active subdrop' : '' }}

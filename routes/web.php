@@ -12,6 +12,7 @@ use App\Http\Controllers\IncenditController;
 use App\Http\Controllers\LeavesAdminController;
 use App\Http\Controllers\LeavesController;
 use App\Http\Controllers\PolicyController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ResignationController;
 use App\Http\Controllers\TerminationController;
@@ -302,3 +303,6 @@ Route::resource('training-type', TrainingTypeController::class);
 Route::resource('promotion', PromotionController::class);
 Route::resource('resignation', ResignationController::class);
 Route::resource('termination', TerminationController::class);
+
+// Projects
+Route::resource('projects', ProjectController::class);

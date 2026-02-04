@@ -18,4 +18,9 @@ class Departments extends Model
     protected $table = 'departments';
 
     protected $primaryKey = 'depart';
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'department_id', 'depart');
+    }
 }

@@ -12,7 +12,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $all = Departments::all();
+        $all = Departments::withCount('users')->get();
 
         return view('hrm.employees.departments', compact('all'));
     }
